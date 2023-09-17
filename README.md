@@ -1,3 +1,3 @@
-# deteccao-anomalia-em-redes
+# Detecção de pontos críticos em rede
 
-  Detecção de Anomalias em Redes: Utilize dados de logs de rede (por exemplo, logs de firewall) para construir um grafo de conexões entre dispositivos. Implemente algoritmos para encontrar componentes biconexos ou fortemente conexos para identificar potenciais anomalias ou atividades suspeitas.
+  Detecção de todas as arestas de corte em uma rede indicando pontos criticos de falha, ou seja, pontos na rede que, se falharem, isolam parte da rede, e identificação de quais pontos ficariam isolados em consequencia da indisponibilidade do mesmo. 
