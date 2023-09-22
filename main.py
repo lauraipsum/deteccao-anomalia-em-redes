@@ -2,23 +2,23 @@ from data.data_read import criar_lista_de_adjacencia
 
 lista_de_adjacencia = criar_lista_de_adjacencia()
 
-def encontrar_arestas_de_corte(lista_de_adjacencia):
+def encontrar_vertices_de_corte(lista_de_adjacencia):
 
-    tempo_descoberta = [-1] * len(lista_de_adjacencia)  # tempo de descoberta de cada vértice
-    low = [-1] * len(lista_de_adjacencia)  # valor "low" de cada vértice
-    arestas_corte = set()  # conjunto para armazenar as arestas de corte encontradas
+    momento_descoberta = [-1] * len(lista_de_adjacencia)  # momento de descoberta de cada vértice
+    valor_minimo_alcancavel = [-1] * len(lista_de_adjacencia)  # valor "valor_minimo_alcancavel" de cada vértice
+    vertices_de_corte = set()  # conjunto para armazenar os vértices de corte encontrados
     tempo = 0  # contador para atribuir valores de tempo de descoberta
     pilha = []  # pilha para implementar a busca em profundidade (DFS)
 
     for vertice_inicial in range(len(lista_de_adjacencia)):
-        if tempo_descoberta[vertice_inicial] == -1:  # verifica se o vértice de início ainda não foi descoberto
+        if momento_descoberta[vertice_inicial] == -1:  # verifica se o vértice de início ainda não foi descoberto
             pilha.append((vertice_inicial, None))  # se não tiver sido descoberto, adiciona à pilha para iniciar uma nova busca em profundidade
 
             while pilha:
                 u, pai = pilha[-1]  # pega o vértice no topo da pilha e seu vértice pai
-                if tempo_descoberta[u] == -1:
-                    tempo_descoberta[u] = tempo  # registra o tempo de descoberta para o vértice
-                    low[u] = tempo
+                if momento_descoberta[u] == -1:
+                    momento_descoberta[u] = tempo  # registra o tempo de descoberta para o vértice
+                    valor_minimo_alcancavel[u] = tempo
                     tempo += 1
 
                 filho = 0
@@ -26,25 +26,25 @@ def encontrar_arestas_de_corte(lista_de_adjacencia):
                     if v == pai:
                         continue
 
-                    if tempo_descoberta[v] == -1:
+                    if momento_descoberta[v] == -1:
                         pilha.append((v, u))  # adiciona os vizinhos não visitados à pilha
                         filho += 1
 
-                    low[u] = min(low[u], tempo_descoberta[v])  # atualiza o valor "low" do vértice atual
+                    valor_minimo_alcancavel[u] = min(valor_minimo_alcancavel[u], momento_descoberta[v])  # atualiza o valor "valor_minimo_alcancavel" do vértice atual
 
                 if filho == 0 and pai is not None:
-                    low[pai] = min(low[pai], low[u])  # atualiza o valor "low" do pai (se necessário)
+                    valor_minimo_alcancavel[pai] = min(valor_minimo_alcancavel[pai], valor_minimo_alcancavel[u])  # atualiza o valor "valor_minimo_alcancavel" do pai (se necessário)
 
-                todos_filhos_visitados = all(tempo_descoberta[v] != -1 for v in lista_de_adjacencia[u])
+                todos_filhos_visitados = all(momento_descoberta[v] != -1 for v in lista_de_adjacencia[u])
                 if todos_filhos_visitados:
                     pilha.pop()  # remove o vértice atual da pilha se todos os vizinhos foram visitados
 
-                if todos_filhos_visitados and pai is not None and low[u] >= tempo_descoberta[u]:
-                    arestas_corte.add((pai, u))  # se a condição for atendida, a aresta é uma aresta de corte
+                if todos_filhos_visitados and pai is not None and valor_minimo_alcancavel[u] >= momento_descoberta[u]:
+                    vertices_de_corte.add(pai)  # se a condição for atendida, o vértice pai é um vértice de corte
 
-    with open("ArestasDeCorte.txt", "w") as f_arestas_corte:
-        for edge in arestas_corte:
-            f_arestas_corte.write(f"{edge[0]} - {edge[1]}\n")
+    with open("VerticesDeCorte.txt", "w") as f_vertices_de_corte:
+        for vertex in vertices_de_corte:
+            f_vertices_de_corte.write(f"{vertex}\n")
 
 print("Iniciando a análise do grafo...")
-encontrar_arestas_de_corte(lista_de_adjacencia)
+encontrar_vertices_de_corte(lista_de_adjacencia)
