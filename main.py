@@ -9,6 +9,7 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
     vertices_de_corte = set()  # conjunto para armazenar os vértices de corte encontrados
     tempo = 0  # contador para atribuir valores de tempo de descoberta
     pilha = []  # pilha para implementar a busca em profundidade (DFS)
+    vertices_isolados = set(range(len(lista_de_adjacencia)))  # conjunto para armazenar todos os vértices como isolados inicialmente
 
     for vertice_inicial in range(len(lista_de_adjacencia)):
         if momento_descoberta[vertice_inicial] == -1:  # verifica se o vértice de início ainda não foi descoberto
@@ -42,9 +43,17 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
                 if todos_filhos_visitados and pai is not None and valor_minimo_alcancavel[u] >= momento_descoberta[u]:
                     vertices_de_corte.add(pai)  # se a condição for atendida, o vértice pai é um vértice de corte
 
+    # Remove os vértices de corte do conjunto de vértices isolados
+    for vertex in vertices_de_corte:
+        vertices_isolados.discard(vertex)
+
     with open("VerticesDeCorte.txt", "w") as f_vertices_de_corte:
         for vertex in vertices_de_corte:
             f_vertices_de_corte.write(f"{vertex}\n")
+
+    with open("VerticesIsolados.txt", "w") as f_vertices_isolados:
+        for vertex in vertices_isolados:
+            f_vertices_isolados.write(f"{vertex}\n")
 
 print("Iniciando a análise do grafo...")
 encontrar_vertices_de_corte(lista_de_adjacencia)
