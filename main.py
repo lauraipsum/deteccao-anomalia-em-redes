@@ -1,3 +1,4 @@
+#teste
 from data.data_read import criar_lista_de_adjacencia
 
 lista_de_adjacencia = criar_lista_de_adjacencia()
