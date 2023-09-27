@@ -43,7 +43,7 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
                 if todos_filhos_visitados and pai is not None and valor_minimo_alcancavel[u] >= momento_descoberta[u]:
                     vertices_de_corte.add(pai)  # se a condição for atendida, o vértice pai é um vértice de corte
-
+            print (vertices_de_corte)
     # Remove os vértices de corte do conjunto de vértices isolados
     for vertex in vertices_de_corte:
         vertices_isolados.discard(vertex)
@@ -58,3 +58,5 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
 print("Iniciando a análise do grafo...")
 encontrar_vertices_de_corte(lista_de_adjacencia)
+
+print(lista_de_adjacencia)
