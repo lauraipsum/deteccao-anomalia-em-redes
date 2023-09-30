@@ -44,14 +44,6 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
         if momento_descoberta[vertice_inicial] == -1:
             dfs(vertice_inicial, None)
 
-
-    '''
-    for vertex in vertices_de_corte:
-        vertices_isolados.discard(vertex)
-        print(vertices_isolados)
-    '''
-
-    
     vertices_de_corte_list = list(vertices_de_corte)
 
     with open("VerticesDeCorte.txt", "w") as f_vertices_de_corte:
@@ -88,13 +80,11 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
             f_vertices_isolados.write(']\n')
 
 
-    G = nx.DiGraph()  # Crie um grafo direcionado
+    G = nx.DiGraph()
 
-    # Adicione nós ao grafo
     for i in range(len(lista_de_adjacencia)):
         G.add_node(i)
-
-    # Adicione arestas direcionadas com base nas informações da lista de adjacência
+        
     for u, neighbors in enumerate(lista_de_adjacencia):
         for v in neighbors:
             G.add_edge(u, v)
@@ -103,7 +93,7 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
     pos = nx.spring_layout(G)  
     nx.draw(G, pos, with_labels=True, node_color=node_colors, node_size=500, font_size=8)
-    plt.title('Graph Visualization')
+    plt.title('Visusalização de Grafico')
     plt.show()
     
 
