@@ -44,14 +44,6 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
         if momento_descoberta[vertice_inicial] == -1:
             dfs(vertice_inicial, None)
 
-
-    '''
-    for vertex in vertices_de_corte:
-        vertices_isolados.discard(vertex)
-        print(vertices_isolados)
-    '''
-
-    
     vertices_de_corte_list = list(vertices_de_corte)
 
     with open("VerticesDeCorte.txt", "w") as f_vertices_de_corte:
@@ -89,13 +81,11 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
             f_vertices_isolados.write(']\n')
 
 
-    G = nx.DiGraph()  # Crie um grafo direcionado
+    G = nx.DiGraph()
 
-    # Adicione nós ao grafo
     for i in range(len(lista_de_adjacencia)):
         G.add_node(i)
-
-    # Adicione arestas direcionadas com base nas informações da lista de adjacência
+        
     for u, neighbors in enumerate(lista_de_adjacencia):
         for v in neighbors:
             G.add_edge(u, v)
@@ -104,48 +94,12 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
     pos = nx.spring_layout(G)  
     nx.draw(G, pos, with_labels=True, node_color=node_colors, node_size=500, font_size=8)
-    plt.title('Graph Visualization')
+    plt.title('Visusalização de Grafico')
     plt.show()
     
 
 print("Iniciando a análise do grafo...")
 print(lista_de_adjacencia)
 vertices_de_corte = encontrar_vertices_de_corte(lista_de_adjacencia)
-
-subgrafos = encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia)
-
-G = nx.Graph()
-for u, neighbors in enumerate(lista_de_adjacencia):
-    for v in neighbors:
-        G.add_edge(u, v)
-
-
-plt.figure(figsize=(8, 6))
-pos = nx.spring_layout(G, seed=42) 
-nx.draw(G, pos, with_labels=True, node_size=200, node_color='lightblue', font_size=10, font_color='black')
-plt.title("Grafo original")
-plt.show(block=True) 
-
-for i, (vertice_de_corte, subgrafo) in enumerate(subgrafos):
-    print(f"Subgrafo {i + 1} (removendo vértice de corte {vertice_de_corte}):")
-    for j, componente in enumerate(subgrafo):
-        print(f"Componente {j + 1}:", componente)
-        
-        subgraph_G = G.subgraph(componente) 
-        plt.figure(figsize=(8, 6))
-        nx.draw(
-            subgraph_G,
-            pos,
-            with_labels=True,
-            node_size=200,
-            node_color='lightblue',
-            font_size=10,
-            font_color='black'
-        )
-        plt.title(f"Subgraph {i + 1} - Component {j + 1}")
-        plt.show(block=True) 
-
-plt.show()
-
 
 
