@@ -42,8 +42,7 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
                     pilha.pop()  # remove o vértice atual da pilha se todos os vizinhos foram visitados
 
                 if todos_filhos_visitados and pai is not None and valor_minimo_alcancavel[u] >= momento_descoberta[u]:
-                    vertices_de_corte.add(pai)  # se a condição for atendida, o vértice pai é um vértice de corte
-            print (vertices_de_corte)
+                    vertices_de_corte.add(pai)  # se a condição for atendida, o vértice pai é um vértice de corte      
     # Remove os vértices de corte do conjunto de vértices isolados
     for vertex in vertices_de_corte:
         vertices_isolados.discard(vertex)
@@ -55,6 +54,7 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
     with open("VerticesIsolados.txt", "w") as f_vertices_isolados:
         for vertex in vertices_isolados:
             f_vertices_isolados.write(f"{vertex}\n")
+    print (vertices_de_corte)
 
 print("Iniciando a análise do grafo...")
 encontrar_vertices_de_corte(lista_de_adjacencia)
