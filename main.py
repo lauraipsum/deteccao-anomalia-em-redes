@@ -57,14 +57,25 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
             f_vertices_isolados.write(f'"{vertex}": [\n')
 
             isolados = [v for v in vertices_isolados if v != vertex]
+            isolados_sets = []
 
-            for i, isolado in enumerate(isolados):
-                f_vertices_isolados.write(f'    {isolado}')
-                if i < len(isolados) - 1:
+            for isolado in isolados:
+                isolados_sets.append({isolado})
+
+            while isolados_sets:
+                combined_sets = set()
+                for s in isolados_sets:
+                    combined_sets |= s
+                    isolados_sets.remove(s)
+
+                f_vertices_isolados.write(f'    {combined_sets}')
+                if isolados_sets:
                     f_vertices_isolados.write(',')
+
                 f_vertices_isolados.write('\n')
 
             f_vertices_isolados.write(']\n')
+
 
     
     G = nx.Graph()
