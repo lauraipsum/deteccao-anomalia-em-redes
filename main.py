@@ -5,6 +5,7 @@ from data.data_read import criar_lista_de_adjacencia
 lista_de_adjacencia = criar_lista_de_adjacencia()
 
 def encontrar_vertices_de_corte(lista_de_adjacencia):
+    #print(lista_de_adjacencia)
 
     momento_descoberta = [-1] * len(lista_de_adjacencia)  # momento de descoberta de cada vértice
     valor_minimo_alcancavel = [-1] * len(lista_de_adjacencia)  # valor "valor_minimo_alcancavel" de cada vértice
@@ -43,9 +44,13 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
         if momento_descoberta[vertice_inicial] == -1:
             dfs(vertice_inicial, None)
 
+
+    '''
     for vertex in vertices_de_corte:
         vertices_isolados.discard(vertex)
-
+        print(vertices_isolados)
+    '''
+    
     vertices_de_corte_list = list(vertices_de_corte)
 
     with open("VerticesDeCorte.txt", "w") as f_vertices_de_corte:
@@ -53,7 +58,12 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
             f_vertices_de_corte.write(f"{vertex}\n")
 
     with open("VerticesIsolados.txt", "w") as f_vertices_isolados:
+        
+        
+        #print(vertices_isolados)
+        
         for vertex in vertices_de_corte_list:
+
             f_vertices_isolados.write(f'"{vertex}": [\n')
 
             isolados = [v for v in vertices_isolados if v != vertex]
@@ -63,7 +73,10 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
                 isolados_sets.append({isolado})
 
             while isolados_sets:
+                print(isolados_sets)
                 combined_sets = set()
+
+                #o erro atual esta nesse trecho pois ele ta adicionando dentro dos vertices isolados aleatoriamente quando ele deveria pegar os adjacentes entre os isolados que nao seja o proprio vertice de corte
                 for s in isolados_sets:
                     combined_sets |= s
                     isolados_sets.remove(s)
@@ -78,6 +91,7 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
 
     
+    #'''
     G = nx.Graph()
     for u, neighbors in enumerate(lista_de_adjacencia):
         for v in neighbors:
@@ -89,10 +103,8 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
     nx.draw(G, pos, with_labels=True, node_color=node_colors, node_size=500, font_size=8)
     plt.title('Graph Visualization')
     plt.show()
-
+    #'''
     
 
 print("Iniciando a análise do grafo...")
 encontrar_vertices_de_corte(lista_de_adjacencia)
-
-print(lista_de_adjacencia)
