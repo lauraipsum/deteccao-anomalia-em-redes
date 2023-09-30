@@ -46,15 +46,11 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
 
     '''
-
-    '''
     for vertex in vertices_de_corte:
         vertices_isolados.discard(vertex)
         print(vertices_isolados)
     '''
-    
-        print(vertices_isolados)
-    '''
+
     
     vertices_de_corte_list = list(vertices_de_corte)
 
@@ -64,28 +60,28 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
     with open("VerticesIsolados.txt", "w") as f_vertices_isolados:
         for vertex in vertices_de_corte_list:
-
             f_vertices_isolados.write(f'"{vertex}": [\n')
 
             isolados = [v for v in vertices_isolados if v != vertex]
-            isolados_sets = []
+            visited = set()
 
-            for isolado in isolados:
-                isolados_sets.append({isolado})
+            while isolados:
+                subgraph = set()
+                stack = [isolados[0]]
 
-            while isolados_sets:
-                print(isolados_sets)
-                combined_sets = set()
+                while stack:
+                    v = stack.pop()
+                    subgraph.add(v)
+                    visited.add(v)
 
-                #o erro atual esta nesse trecho pois ele ta adicionando dentro dos vertices isolados aleatoriamente quando ele deveria pegar os adjacentes entre os isolados que nao seja o proprio vertice de corte
-                for s in isolados_sets:
-                    combined_sets |= s
-                    isolados_sets.remove(s)
+                    for neighbor in lista_de_adjacencia[v]:
+                        if neighbor in isolados and neighbor not in visited:
+                            stack.append(neighbor)
 
-                f_vertices_isolados.write(f'    {combined_sets}')
-                if isolados_sets:
+                isolados = [v for v in isolados if v not in subgraph]
+                f_vertices_isolados.write(f'    {subgraph}')
+                if isolados:
                     f_vertices_isolados.write(',')
-
 
                 f_vertices_isolados.write('\n')
 
