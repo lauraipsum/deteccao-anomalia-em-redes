@@ -30,10 +30,10 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
                 filho += 1
                 dfs(v, u)
                 valor_minimo_alcancavel[u] = min(valor_minimo_alcancavel[u], valor_minimo_alcancavel[v])
-                
+
                 if valor_minimo_alcancavel[v] >= momento_descoberta[u] and pai is not None:
                     vertices_de_corte.add(u)
-            
+
             elif v != pai:
                 valor_minimo_alcancavel[u] = min(valor_minimo_alcancavel[u], momento_descoberta[v])
 
@@ -110,4 +110,42 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
 print("Iniciando a análise do grafo...")
 print(lista_de_adjacencia)
-encontrar_vertices_de_corte(lista_de_adjacencia)
+vertices_de_corte = encontrar_vertices_de_corte(lista_de_adjacencia)
+
+subgrafos = encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia)
+
+G = nx.Graph()
+for u, neighbors in enumerate(lista_de_adjacencia):
+    for v in neighbors:
+        G.add_edge(u, v)
+
+
+plt.figure(figsize=(8, 6))
+pos = nx.spring_layout(G, seed=42) 
+nx.draw(G, pos, with_labels=True, node_size=200, node_color='lightblue', font_size=10, font_color='black')
+plt.title("Grafo original")
+plt.show(block=True) 
+
+for i, (vertice_de_corte, subgrafo) in enumerate(subgrafos):
+    print(f"Subgrafo {i + 1} (removendo vértice de corte {vertice_de_corte}):")
+    for j, componente in enumerate(subgrafo):
+        print(f"Componente {j + 1}:", componente)
+        
+        subgraph_G = G.subgraph(componente) 
+        plt.figure(figsize=(8, 6))
+        nx.draw(
+            subgraph_G,
+            pos,
+            with_labels=True,
+            node_size=200,
+            node_color='lightblue',
+            font_size=10,
+            font_color='black'
+        )
+        plt.title(f"Subgraph {i + 1} - Component {j + 1}")
+        plt.show(block=True) 
+
+plt.show()
+
+
+
