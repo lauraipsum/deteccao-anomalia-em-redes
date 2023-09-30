@@ -5,6 +5,7 @@ from data.data_read import criar_lista_de_adjacencia
 lista_de_adjacencia = criar_lista_de_adjacencia()
 
 def encontrar_vertices_de_corte(lista_de_adjacencia):
+    #print(lista_de_adjacencia)
 
     momento_descoberta = [-1] * len(lista_de_adjacencia)  # momento de descoberta de cada vértice
     valor_minimo_alcancavel = [-1] * len(lista_de_adjacencia)  # valor "valor_minimo_alcancavel" de cada vértice
@@ -49,6 +50,7 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
         vertices_isolados.discard(vertex)
         print(vertices_isolados)
     '''
+
     
     vertices_de_corte_list = list(vertices_de_corte)
 
@@ -57,27 +59,28 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
             f_vertices_de_corte.write(f"{vertex}\n")
 
     with open("VerticesIsolados.txt", "w") as f_vertices_isolados:
-        
-        print(lista_de_adjacencia)
-        print(vertices_isolados)
-        
         for vertex in vertices_de_corte_list:
             f_vertices_isolados.write(f'"{vertex}": [\n')
 
             isolados = [v for v in vertices_isolados if v != vertex]
-            isolados_sets = []
+            visited = set()
 
-            for isolado in isolados:
-                isolados_sets.append({isolado})
+            while isolados:
+                subgraph = set()
+                stack = [isolados[0]]
 
-            while isolados_sets:
-                combined_sets = set()
-                for s in isolados_sets:
-                    combined_sets |= s
-                    isolados_sets.remove(s)
+                while stack:
+                    v = stack.pop()
+                    subgraph.add(v)
+                    visited.add(v)
 
-                f_vertices_isolados.write(f'    {combined_sets}')
-                if isolados_sets:
+                    for neighbor in lista_de_adjacencia[v]:
+                        if neighbor in isolados and neighbor not in visited:
+                            stack.append(neighbor)
+
+                isolados = [v for v in isolados if v not in subgraph]
+                f_vertices_isolados.write(f'    {subgraph}')
+                if isolados:
                     f_vertices_isolados.write(',')
 
                 f_vertices_isolados.write('\n')
