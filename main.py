@@ -6,6 +6,7 @@ lista_de_adjacencia = criar_lista_de_adjacencia()
 
 def encontrar_vertices_de_corte(lista_de_adjacencia):
     #print(lista_de_adjacencia)
+    #print(lista_de_adjacencia)
 
     momento_descoberta = [-1] * len(lista_de_adjacencia)  # momento de descoberta de cada vértice
     valor_minimo_alcancavel = [-1] * len(lista_de_adjacencia)  # valor "valor_minimo_alcancavel" de cada vértice
@@ -68,7 +69,16 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
             while isolados:
                 subgraph = set()
                 stack = [isolados[0]]
+            visited = set()
 
+            while isolados:
+                subgraph = set()
+                stack = [isolados[0]]
+
+                while stack:
+                    v = stack.pop()
+                    subgraph.add(v)
+                    visited.add(v)
                 while stack:
                     v = stack.pop()
                     subgraph.add(v)
@@ -77,7 +87,13 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
                     for neighbor in lista_de_adjacencia[v]:
                         if neighbor in isolados and neighbor not in visited:
                             stack.append(neighbor)
+                    for neighbor in lista_de_adjacencia[v]:
+                        if neighbor in isolados and neighbor not in visited:
+                            stack.append(neighbor)
 
+                isolados = [v for v in isolados if v not in subgraph]
+                f_vertices_isolados.write(f'    {subgraph}')
+                if isolados:
                 isolados = [v for v in isolados if v not in subgraph]
                 f_vertices_isolados.write(f'    {subgraph}')
                 if isolados:
@@ -88,13 +104,11 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
             f_vertices_isolados.write(']\n')
 
 
-    G = nx.DiGraph()  # Crie um grafo direcionado
+    G = nx.DiGraph()
 
-    # Adicione nós ao grafo
     for i in range(len(lista_de_adjacencia)):
         G.add_node(i)
-
-    # Adicione arestas direcionadas com base nas informações da lista de adjacência
+        
     for u, neighbors in enumerate(lista_de_adjacencia):
         for v in neighbors:
             G.add_edge(u, v)
@@ -103,7 +117,7 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
     pos = nx.spring_layout(G)  
     nx.draw(G, pos, with_labels=True, node_color=node_colors, node_size=500, font_size=8)
-    plt.title('Graph Visualization')
+    plt.title('Visusalização de Grafico')
     plt.show()
     
 
