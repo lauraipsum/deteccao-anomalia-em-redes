@@ -1,8 +1,11 @@
+import networkx as nx
+import matplotlib.pyplot as plt
 from data.data_read import criar_lista_de_adjacencia
 
 lista_de_adjacencia = criar_lista_de_adjacencia()
 
 def encontrar_vertices_de_corte(lista_de_adjacencia):
+    #print(lista_de_adjacencia)
 
     momento_descoberta = [-1] * len(lista_de_adjacencia)  # momento de descoberta de cada vértice
     valor_minimo_alcancavel = [-1] * len(lista_de_adjacencia)  # valor "valor_minimo_alcancavel" de cada vértice
@@ -41,17 +44,69 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
         if momento_descoberta[vertice_inicial] == -1:
             dfs(vertice_inicial, None)
 
+
+    '''
     for vertex in vertices_de_corte:
         vertices_isolados.discard(vertex)
+        print(vertices_isolados)
+    '''
+
+    
+    vertices_de_corte_list = list(vertices_de_corte)
 
     with open("VerticesDeCorte.txt", "w") as f_vertices_de_corte:
-        for vertex in vertices_de_corte:
+        for vertex in vertices_de_corte_list:
             f_vertices_de_corte.write(f"{vertex}\n")
             print(f"Vértice de corte: {vertex}")
 
     with open("VerticesIsolados.txt", "w") as f_vertices_isolados:
-        for vertex in vertices_isolados:
-            f_vertices_isolados.write(f"{vertex}\n")
+        for vertex in vertices_de_corte_list:
+            f_vertices_isolados.write(f'"{vertex}": [\n')
+
+            isolados = [v for v in vertices_isolados if v != vertex]
+            visited = set()
+
+            while isolados:
+                subgraph = set()
+                stack = [isolados[0]]
+
+                while stack:
+                    v = stack.pop()
+                    subgraph.add(v)
+                    visited.add(v)
+
+                    for neighbor in lista_de_adjacencia[v]:
+                        if neighbor in isolados and neighbor not in visited:
+                            stack.append(neighbor)
+
+                isolados = [v for v in isolados if v not in subgraph]
+                f_vertices_isolados.write(f'    {subgraph}')
+                if isolados:
+                    f_vertices_isolados.write(',')
+
+                f_vertices_isolados.write('\n')
+
+            f_vertices_isolados.write(']\n')
+
+
+    G = nx.DiGraph()  # Crie um grafo direcionado
+
+    # Adicione nós ao grafo
+    for i in range(len(lista_de_adjacencia)):
+        G.add_node(i)
+
+    # Adicione arestas direcionadas com base nas informações da lista de adjacência
+    for u, neighbors in enumerate(lista_de_adjacencia):
+        for v in neighbors:
+            G.add_edge(u, v)
+
+    node_colors = ['red' if node in vertices_de_corte else 'blue' for node in G.nodes()]
+
+    pos = nx.spring_layout(G)  
+    nx.draw(G, pos, with_labels=True, node_color=node_colors, node_size=500, font_size=8)
+    plt.title('Graph Visualization')
+    plt.show()
+    
 
 print("Iniciando a análise do grafo...")
 print(lista_de_adjacencia)
