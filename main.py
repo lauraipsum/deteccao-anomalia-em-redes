@@ -46,8 +46,13 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
 
     '''
+
+    '''
     for vertex in vertices_de_corte:
         vertices_isolados.discard(vertex)
+        print(vertices_isolados)
+    '''
+    
         print(vertices_isolados)
     '''
     
@@ -58,10 +63,6 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
             f_vertices_de_corte.write(f"{vertex}\n")
 
     with open("VerticesIsolados.txt", "w") as f_vertices_isolados:
-        
-        
-        #print(vertices_isolados)
-        
         for vertex in vertices_de_corte_list:
 
             f_vertices_isolados.write(f'"{vertex}": [\n')
@@ -85,14 +86,19 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
                 if isolados_sets:
                     f_vertices_isolados.write(',')
 
+
                 f_vertices_isolados.write('\n')
 
             f_vertices_isolados.write(']\n')
 
 
-    
-    #'''
-    G = nx.Graph()
+    G = nx.DiGraph()  # Crie um grafo direcionado
+
+    # Adicione nós ao grafo
+    for i in range(len(lista_de_adjacencia)):
+        G.add_node(i)
+
+    # Adicione arestas direcionadas com base nas informações da lista de adjacência
     for u, neighbors in enumerate(lista_de_adjacencia):
         for v in neighbors:
             G.add_edge(u, v)
@@ -103,7 +109,6 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
     nx.draw(G, pos, with_labels=True, node_color=node_colors, node_size=500, font_size=8)
     plt.title('Graph Visualization')
     plt.show()
-    #'''
     
 
 print("Iniciando a análise do grafo...")
