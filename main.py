@@ -1,3 +1,4 @@
+import copy
 import networkx as nx
 import matplotlib.pyplot as plt
 from data.data_read import criar_lista_de_adjacencia
@@ -55,8 +56,8 @@ def encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia):
 
     for vertice_de_corte in vertices_de_corte:
        
-        grafo_temporario = [lista.copy() for lista in lista_de_adjacencia]
-        
+        grafo_temporario = copy.deepcopy(lista_de_adjacencia)  # Create a deep copy
+
         grafo_temporario[vertice_de_corte] = []
         for i in range(len(grafo_temporario)):
             grafo_temporario[i] = [v for v in grafo_temporario[i] if v != vertice_de_corte]
@@ -89,7 +90,7 @@ vertices_de_corte = encontrar_vertices_de_corte(lista_de_adjacencia)
 
 subgrafos = encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia)
 
-G = nx.Graph()
+G = nx.DiGraph()
 for u, neighbors in enumerate(lista_de_adjacencia):
     for v in neighbors:
         G.add_edge(u, v)
