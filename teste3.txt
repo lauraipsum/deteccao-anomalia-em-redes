@@ -1,0 +1,16 @@
+# Directed graph: as-caida20070917.txt
+# The CAIDA AS Relationships Dataset, from 09 17 2007
+# Relationships:	-1 (<FromNodeId> is a customer of <ToNodeId>)
+# 			1 (<FromNodeId> is a provider of <ToNodeId>)
+# 			0 (<FromNodeId> and <ToNodeId> are peers)
+# 			2 (<FromNodeId> and <ToNodeId> are siblings (the same organization).)
+# Nodes:8020	Edges: 36406
+# FromNodeId        ToNodeId	Relationship
+1	0	-1
+1	2	0
+2	0	1
+2	3	2
+2	4	1
+4	2	1
+4	5	1
+5	4	1

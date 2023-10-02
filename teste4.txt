@@ -1,0 +1,19 @@
+# Directed graph: teste4.txt
+# The CAIDA AS Relationships Dataset, from 09 17 2007
+# Relationships:	-1 (<FromNodeId> is a customer of <ToNodeId>)
+# 			1 (<FromNodeId> is a provider of <ToNodeId>)
+# 			0 (<FromNodeId> and <ToNodeId> are peers)
+# 			2 (<FromNodeId> and <ToNodeId> are siblings (the same organization).)
+# Nodes:8020	Edges: 36406
+# FromNodeId        ToNodeId	Relationship
+8563	4323	-1
+13499	19548	-1
+13499	3356	-1
+8434	13243	1
+8434	13237	0
+8434	2119	-1
+8434	2603	0
+8434	30798	1
+8434	16150	0
+8434	174	-1
+8434	13177	1
