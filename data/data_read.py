@@ -1,7 +1,7 @@
 def criar_lista_de_adjacencia():
     lista_de_adjacencia = []
 
-    with open("data/teste5.txt", "r") as file:
+    with open("data/as-caida20070917.txt", "r") as file:
         lines = file.readlines()
 
     in_data_section = False
