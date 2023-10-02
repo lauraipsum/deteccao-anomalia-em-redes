@@ -1,7 +1,7 @@
 def criar_lista_de_adjacencia():
     lista_de_adjacencia = []
 
-    with open("data/teste2.txt", "r") as file:
+    with open("data/teste5.txt", "r") as file:
         lines = file.readlines()
 
     in_data_section = False
@@ -25,17 +25,17 @@ def criar_lista_de_adjacencia():
             lista_de_adjacencia.append([])
 
         if relationship == 0:
-            # Relação bidirecional para peer to peer
+            # relação bidirecional para peer to peer
             lista_de_adjacencia[from_node].append(to_node)
             lista_de_adjacencia[to_node].append(from_node)
         elif relationship == 1:
-            # Relação de provedor (from_node -> to_node)
+            # relação de provedor (from_node -> to_node)
             lista_de_adjacencia[from_node].append(to_node)
         elif relationship == -1:
-            # Relação de cliente (from_node <- to_node)
+            # relação de cliente (from_node <- to_node)
             lista_de_adjacencia[to_node].append(from_node)
         elif relationship == 2:
-            # Relação sibling-to-sibling, não tem uma direção específica
+            # relação sibling-to-sibling, não tem uma direção específica
             lista_de_adjacencia[from_node].append(to_node)
             lista_de_adjacencia[to_node].append(from_node)
 
