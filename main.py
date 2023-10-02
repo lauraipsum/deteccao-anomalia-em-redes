@@ -121,7 +121,7 @@ def main():
     
     vertices_de_corte = encontrar_vertices_de_corte(lista_de_adjacencia)
 
-    grafo = nx.Graph(lista_adjacencia_para_arestas(lista_de_adjacencia))
+    grafo = nx.DiGraph(lista_adjacencia_para_arestas(lista_de_adjacencia))
    
     total_vertices_originais = len(grafo.nodes())
     vertices_encontrados = set()
