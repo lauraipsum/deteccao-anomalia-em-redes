@@ -1,0 +1,20 @@
+Subgrafo 1 (Removido o vértice de corte 8434):
+Componente 1:
+[
+    [13237],
+    [16150],
+    [2119],
+    [2603],
+    [174],
+]
+Componente 2:
+[
+    [13499],
+    [3356],
+    [19548],
+]
+Componente 3:
+[
+    [8563],
+    [4323],
+]
