@@ -25,7 +25,7 @@ O módulo `main.py` é o ponto de entrada do programa e realiza uma série de an
 		-   Se `v` tiver um valor mínimo alcançável maior ou igual ao momento de descoberta de `u` e `u` não for o vértice inicial da busca, então `u` é um vértice de corte.
 		- Quando não há mais filhos para explorar ou quando a busca termina, o algoritmo atualiza o valor mínimo alcançável do pai de `u`, se aplicável.
 	-  A função percorre todos os vértices iniciais não descobertos para encontrar os vértices de corte.
-	-
+  
 - Em seguida, os vértices de corte são escritos em um arquivo chamado "VerticesDeCorte.txt".
 
 - Identifica-se os subgrafos que resultam da remoção dos vértices de corte usando a função `encontrar_subgrafos_apos_remocao`.
