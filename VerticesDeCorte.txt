@@ -1,0 +1,3 @@
+Vertice de corte: 2
+Vertice de corte: 4
+Vertice de corte: 5
