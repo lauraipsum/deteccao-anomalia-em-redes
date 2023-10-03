@@ -121,7 +121,7 @@ def main():
     
     vertices_de_corte = encontrar_vertices_de_corte(lista_de_adjacencia)
 
-    grafo = nx.Graph(lista_adjacencia_para_arestas(lista_de_adjacencia))
+    grafo = nx.DiGraph(lista_adjacencia_para_arestas(lista_de_adjacencia))
    
     
     # verificação do tamanho do grafo
@@ -138,6 +138,5 @@ def main():
     subgrafos = encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia)
     
     escrever_subgrafos(subgrafos, lista_de_adjacencia)
-
 if __name__ == "__main__":
     main()
