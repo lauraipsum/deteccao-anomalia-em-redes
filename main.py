@@ -123,29 +123,23 @@ def main():
 
     grafo = nx.DiGraph(lista_adjacencia_para_arestas(lista_de_adjacencia))
    
-    total_vertices_originais = len(grafo.nodes())
-    vertices_encontrados = set()
-
     with open("VerticesDeCorte.txt", "w") as f_vertices_de_corte:
         for vertex in vertices_de_corte:
             f_vertices_de_corte.write(f"Vertice de corte: {vertex}\n")
 
     subgrafos = encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia)
     
-    for _, subgrafo, _ in subgrafos:
-        vertices_encontrados.update(subgrafo.nodes())
-
-    porcentagem_encontrada = len(vertices_encontrados) / total_vertices_originais * 100
-    print(f"Porcentagem de subgrafos encontrados: {porcentagem_encontrada:.2f}%")
-
     escrever_subgrafos(subgrafos, lista_de_adjacencia)
     
+    """
     # verificação do tamanho do grafo
-    if total_vertices_originais <= 100:
+    if len(grafo.nodes()) <= 100:
         plotar_grafo_com_vertices_de_corte(grafo, vertices_de_corte)
     else:
         print("Não foi possível plotar o grafo.")
-
+    """
+    
+    plotar_grafo_com_vertices_de_corte(grafo, vertices_de_corte)
 
 if __name__ == "__main__":
     main()
