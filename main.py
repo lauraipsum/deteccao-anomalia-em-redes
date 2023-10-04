@@ -43,7 +43,6 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
     return vertices_de_corte
 
-
 def lista_adjacencia_para_arestas(lista_de_adjacencia):
     arestas = []
     for u, vizinhos in enumerate(lista_de_adjacencia):
@@ -52,6 +51,13 @@ def lista_adjacencia_para_arestas(lista_de_adjacencia):
     return arestas
 
 def encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia):
+    def dfs(u, visited):
+        visited[u] = True
+        componente_conectada.add(u)
+        for v in lista_de_adjacencia[u]:
+            if not visited[v]:
+                dfs(v, visited)
+
     subgrafos = []
     arestas_original = lista_adjacencia_para_arestas(lista_de_adjacencia)
 
@@ -59,11 +65,29 @@ def encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia):
         copia_lista_adjacencia = copy.deepcopy(lista_de_adjacencia)
         copia_lista_adjacencia[vertice_de_corte] = []  # remove o vértice de corte e suas arestas
         arestas_subgrafo = lista_adjacencia_para_arestas(copia_lista_adjacencia)
-        subgrafo = nx.Graph(arestas_subgrafo)
-        componentes = list(nx.connected_components(subgrafo))
+
+        # inicializa as estruturas para encontrar as componentes conectadas
+        visited = [False] * len(lista_de_adjacencia)
+        subgrafo = {}
+        componentes = []
+
+        for u in range(len(lista_de_adjacencia)):
+            if not visited[u]:
+                componente_conectada = set()
+                dfs(u, visited)
+                componentes.append(componente_conectada)
+
         # remove o vértice de corte dos componentes
         for componente in componentes:
             componente.discard(vertice_de_corte)
+
+        # cria o subgrafo
+        for aresta in arestas_subgrafo:
+            u, v = aresta
+            if u in componente_conectada and v in componente_conectada:
+                subgrafo.setdefault(u, []).append(v)
+                subgrafo.setdefault(v, []).append(u)
+
         subgrafos.append((vertice_de_corte, subgrafo, componentes))
 
     return subgrafos
@@ -120,8 +144,6 @@ def main():
     lista_de_adjacencia = criar_lista_de_adjacencia()
     
     vertices_de_corte = encontrar_vertices_de_corte(lista_de_adjacencia)
-
-    grafo = nx.DiGraph(lista_adjacencia_para_arestas(lista_de_adjacencia))
    
     with open("VerticesDeCorte.txt", "w") as f_vertices_de_corte:
         for vertex in vertices_de_corte:
@@ -131,14 +153,7 @@ def main():
     
     escrever_subgrafos(subgrafos, lista_de_adjacencia)
     
-    """
-    # verificação do tamanho do grafo
-    if len(grafo.nodes()) <= 100:
-        plotar_grafo_com_vertices_de_corte(grafo, vertices_de_corte)
-    else:
-        print("Não foi possível plotar o grafo.")
-    """
-    
+    grafo = nx.DiGraph(lista_adjacencia_para_arestas(lista_de_adjacencia))
     plotar_grafo_com_vertices_de_corte(grafo, vertices_de_corte)
 
 if __name__ == "__main__":
