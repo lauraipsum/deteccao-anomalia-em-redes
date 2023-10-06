@@ -32,8 +32,8 @@ O módulo `main.py` é o ponto de entrada do programa e realiza uma série de an
     - A função itera sobre cada vértice de corte previamente identificado.
     - Para cada vértice de corte, uma cópia da lista de adjacência é criada, removendo o vértice de corte e suas arestas correspondentes. Isso simula a remoção do vértice de corte do grafo.
     - Em seguida, a função realiza uma busca em profundidade (DFS) nos componentes conectados do subgrafo resultante.
-    - Cada componente conectada é armazenada em um conjunto.
-    - O vértice de corte é removido de cada componente conectada, pois ele foi removido do subgrafo.
+    - Cada componente conectado é armazenada em um conjunto.
+    - O vértice de corte é removido de cada componente conectado, pois ele foi removido do subgrafo.
     - O subgrafo é construído a partir das arestas do subgrafo resultante.
     - O resultado é uma lista de subgrafos, cada um representando um componente conectado no grafo original após a remoção dos vértices de corte.
 
