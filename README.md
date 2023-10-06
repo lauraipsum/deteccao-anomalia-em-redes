@@ -25,16 +25,18 @@ O módulo `main.py` é o ponto de entrada do programa e realiza uma série de an
 		-   Se `v` tiver um valor mínimo alcançável maior ou igual ao momento de descoberta de `u` e `u` não for o vértice inicial da busca, então `u` é um vértice de corte.
 		- Quando não há mais filhos para explorar ou quando a busca termina, o algoritmo atualiza o valor mínimo alcançável do pai de `u`, se aplicável.
 	-  A função percorre todos os vértices iniciais não descobertos para encontrar os vértices de corte.
-  
+	
 - Em seguida, os vértices de corte são escritos em um arquivo chamado "VerticesDeCorte.txt".
 
 - Identifica-se os subgrafos que resultam da remoção dos vértices de corte usando a função `encontrar_subgrafos_apos_remocao`.
-	-  A função `encontrar_subgrafos_apos_remocao` recebe a lista de vértices de corte e a lista de adjacência original.
-	-  Ela cria cópias da lista de adjacência, remove o vértice de corte e suas arestas dessas cópias.
-	-  Em seguida, cria um subgrafo a partir das arestas da cópia da lista de adjacência.
-	-  Encontra os componentes conectados no subgrafo usando `nx.connected_components`.
-	-  Remove o vértice de corte de cada componente.
-	-  Armazena as informações do vértice de corte, subgrafo e componentes em uma lista `subgrafos`.
+    - A função itera sobre cada vértice de corte previamente identificado.
+    - Para cada vértice de corte, uma cópia da lista de adjacência é criada, removendo o vértice de corte e suas arestas correspondentes. Isso simula a remoção do vértice de corte do grafo.
+    - Em seguida, a função realiza uma busca em profundidade (DFS) nos componentes conectados do subgrafo resultante.
+    - Cada componente conectada é armazenada em um conjunto.
+    - O vértice de corte é removido de cada componente conectada, pois ele foi removido do subgrafo.
+    - O subgrafo é construído a partir das arestas do subgrafo resultante.
+    - O resultado é uma lista de subgrafos, cada um representando um componente conectado no grafo original após a remoção dos vértices de corte.
+
 
 -  Os subgrafos são escritos em um arquivo chamado "Subgrafos.txt".
 
