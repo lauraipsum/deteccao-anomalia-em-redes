@@ -28,7 +28,7 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
                 dfs(v, u)
                 valor_minimo_alcancavel[u] = min(valor_minimo_alcancavel[u], valor_minimo_alcancavel[v])
 
-                if valor_minimo_alcancavel[v] >= momento_descoberta[u] and pai is not None:
+                if valor_minimo_alcancavel[v] >= momento_descoberta[u]:
                     vertices_de_corte.add(u)
 
             elif v != pai:
@@ -45,15 +45,62 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
 def lista_adjacencia_para_arestas(lista_de_adjacencia):
     arestas = []
+    #print(lista_de_adjacencia)
     for u, vizinhos in enumerate(lista_de_adjacencia):
         for v in vizinhos:
             arestas.append((u, v))
+    print (arestas)
     return arestas
+
+#removido pois a solução abaixo dela faz o serviçp de forma correta o erro anteriror e justamente no ato da impressão 
+# def encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia):
+#     def dfs(u, visited):
+#         visited[u] = True
+#         componente_conectada.add(u)
+#         for v in lista_de_adjacencia[u]:
+#             if not visited[v]:
+#                 dfs(v, visited)
+
+#     subgrafos = []
+#     arestas_original = lista_adjacencia_para_arestas(lista_de_adjacencia)
+
+#     for vertice_de_corte in vertices_de_corte:
+#         copia_lista_adjacencia = copy.deepcopy(lista_de_adjacencia)
+#         copia_lista_adjacencia[vertice_de_corte] = []  # remove o vértice de corte e suas arestas
+#         arestas_subgrafo = lista_adjacencia_para_arestas(copia_lista_adjacencia)
+
+#         # inicializa as estruturas para encontrar as componentes conectadas
+#         visited = [False] * len(lista_de_adjacencia)
+#         subgrafo = {}
+#         componentes = []
+
+#         for u in range(len(lista_de_adjacencia)):
+#             if not visited[u]:
+#                 componente_conectada = set()
+#                 dfs(u, visited)
+#                 componentes.append(componente_conectada)
+
+#         # remove o vértice de corte dos componentes
+#         for componente in componentes:
+#             componente.discard(vertice_de_corte)
+
+#         # cria o subgrafo
+#         for aresta in arestas_subgrafo:
+#             u, v = aresta
+#             if u in componente_conectada and v in componente_conectada:
+#                 subgrafo.setdefault(u, []).append(v)
+#                 subgrafo.setdefault(v, []).append(u)
+#         #aparentemente o componenete abaixo "subgrafo esta tendo um papel meio inutil a ser passado para a frente"
+#         #print("aqui", subgrafo)
+#         #print("aqui2", componentes)
+#         subgrafos.append((vertice_de_corte, subgrafo, componentes))
+
+#     return subgrafos
 
 def encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia):
     def dfs(u, visited):
         visited[u] = True
-        componente_conectada.add(u)
+        componente_original.append(u)
         for v in lista_de_adjacencia[u]:
             if not visited[v]:
                 dfs(v, visited)
@@ -73,36 +120,40 @@ def encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia):
 
         for u in range(len(lista_de_adjacencia)):
             if not visited[u]:
-                componente_conectada = set()
+                componente_original = []
                 dfs(u, visited)
-                componentes.append(componente_conectada)
+                if any(v in vertices_de_corte for v in componente_original):
+                    componentes.append(componente_original)
 
         # remove o vértice de corte dos componentes
         for componente in componentes:
-            componente.discard(vertice_de_corte)
+            componente.remove(vertice_de_corte)
 
         # cria o subgrafo
         for aresta in arestas_subgrafo:
             u, v = aresta
-            if u in componente_conectada and v in componente_conectada:
+            if u in componente_original and v in componente_original:
                 subgrafo.setdefault(u, []).append(v)
                 subgrafo.setdefault(v, []).append(u)
 
         subgrafos.append((vertice_de_corte, subgrafo, componentes))
 
     return subgrafos
+
                 
 def escrever_subgrafos(subgrafos, lista_de_adjacencia):
+    #print("aqui1", subgrafos)
     with open("Subgrafos.txt", "w") as f_subgrafos:
         for i, (vertice_de_corte, subgrafo, componentes) in enumerate(subgrafos):
             f_subgrafos.write(f"Subgrafo {i + 1} (Removido o vertice de corte {vertice_de_corte}):\n")
             for j, componente in enumerate(componentes, start=1):
+                #print(j)
                 f_subgrafos.write(f"Componente {j}:\n")
                 f_subgrafos.write("[\n")
 
                 vertices_isolados = set(componente)
                 visited = set()
-
+                #print(vertices_isolados, " i\n")
                 while vertices_isolados:
                     subgraph = set()
                     stack = [next(iter(vertices_isolados))]
@@ -122,7 +173,7 @@ def escrever_subgrafos(subgrafos, lista_de_adjacencia):
                 f_subgrafos.write("]\n")
                 
 def plotar_grafo_com_vertices_de_corte(grafo, vertices_de_corte):
-    
+    print(grafo)
     pos = nx.spring_layout(grafo)
     
     vertices_normais = set(grafo.nodes()) - set(vertices_de_corte)
