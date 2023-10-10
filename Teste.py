@@ -263,11 +263,11 @@ class Grafo:
             for destino, peso in arestas:
                 G.add_edge(vertice, destino)
 
-        # Organizar o grafo em formato de árvore usando o layout kamada_kawai
-        pos = nx.kamada_kawai_layout(G)
+        # Definir o layout e desenhar o grafo
+        pos = nx.spring_layout(G)  # Exemplo de layout de mola
 
         # Desenhar vértices normais (azuis)
-        nx.draw(G, pos, nodelist=vertices_normais, node_color='blue', node_size=300, with_labels=True, font_size=10, font_color='black', arrows=True)
+        nx.draw(G, pos, nodelist=vertices_normais, node_color='c', node_size=300, with_labels=True, font_size=10, font_color='black', arrows=True)
 
         # Desenhar vértices de corte (vermelhos)
         nx.draw(G, pos, nodelist=vertices_corte, node_color='red', node_size=300, with_labels=True, font_size=10, font_color='black', arrows=True)
