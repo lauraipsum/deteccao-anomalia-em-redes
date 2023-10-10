@@ -45,9 +45,11 @@ def encontrar_vertices_de_corte(lista_de_adjacencia):
 
 def lista_adjacencia_para_arestas(lista_de_adjacencia):
     arestas = []
+    #print(lista_de_adjacencia)
     for u, vizinhos in enumerate(lista_de_adjacencia):
         for v in vizinhos:
             arestas.append((u, v))
+    print (arestas)
     return arestas
 
 #removido pois a solução abaixo dela faz o serviçp de forma correta o erro anteriror e justamente no ato da impressão 
@@ -140,18 +142,18 @@ def encontrar_subgrafos_apos_remocao(vertices_de_corte, lista_de_adjacencia):
 
                 
 def escrever_subgrafos(subgrafos, lista_de_adjacencia):
-    print("aqui1", subgrafos)
+    #print("aqui1", subgrafos)
     with open("Subgrafos.txt", "w") as f_subgrafos:
         for i, (vertice_de_corte, subgrafo, componentes) in enumerate(subgrafos):
             f_subgrafos.write(f"Subgrafo {i + 1} (Removido o vertice de corte {vertice_de_corte}):\n")
             for j, componente in enumerate(componentes, start=1):
-                print(j)
+                #print(j)
                 f_subgrafos.write(f"Componente {j}:\n")
                 f_subgrafos.write("[\n")
 
                 vertices_isolados = set(componente)
                 visited = set()
-                print(vertices_isolados, " i\n")
+                #print(vertices_isolados, " i\n")
                 while vertices_isolados:
                     subgraph = set()
                     stack = [next(iter(vertices_isolados))]
@@ -171,7 +173,7 @@ def escrever_subgrafos(subgrafos, lista_de_adjacencia):
                 f_subgrafos.write("]\n")
                 
 def plotar_grafo_com_vertices_de_corte(grafo, vertices_de_corte):
-    
+    print(grafo)
     pos = nx.spring_layout(grafo)
     
     vertices_normais = set(grafo.nodes()) - set(vertices_de_corte)

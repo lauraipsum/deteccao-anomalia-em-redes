@@ -1,36 +1,20 @@
-Subgrafo 1 (Removido o vertice de corte 8):
-Componente 1:
-[
-    [32],
-    [2, 5, 7, 9, 10, 11, 19, 25, 30],
-    [6],
-    [26],
-]
-Subgrafo 2 (Removido o vertice de corte 10):
-Componente 1:
-[
-    [32],
-    [9, 2, 5, 30],
-    [6],
-    [11, 19, 7],
-    [8, 26],
-    [25],
-]
-Subgrafo 3 (Removido o vertice de corte 2):
-Componente 1:
-[
-    [32],
-    [5],
-    [6],
-    [7, 8, 10, 11, 19, 25, 26],
-    [9],
-    [30],
-]
-Subgrafo 4 (Removido o vertice de corte 7):
-Componente 1:
-[
-    [32],
-    [2, 5, 6, 8, 9, 10, 25, 26, 30],
-    [19],
-    [11],
-]
+Abaixo estao os subgrafos gerados apartoir de cada vertice de corte:
+    Subgrafos apos a remocao do vertice 8:
+        {32, 2, 5, 7, 9, 10, 11, 19, 25, 30},
+        {6},
+        {26},
+    Subgrafos apos a remocao do vertice 2:
+        {32, 6, 7, 8, 10, 11, 19, 25, 26},
+        {9},
+        {30},
+        {5},
+    Subgrafos apos a remocao do vertice 10:
+        {25},
+        {9, 2, 5, 30},
+        {8, 26, 6},
+        {19, 32, 11, 7},
+    Subgrafos apos a remocao do vertice 7:
+        {2, 5, 6, 8, 9, 10, 25, 26, 30},
+        {11},
+        {19},
+        {32},
