@@ -4,10 +4,13 @@
 
 # Integrantes do grupo
 
--Antonio Camilo Santos Feitosa
--Carlos Henrique
--Laura Cardoso Rodrigues
--Yuming Ruan
+- Antonio Camilo Santos Feitosa
+  
+- Carlos Henrique
+  
+- Laura Cardoso Rodrigues
+  
+- Yuming Ruan
 
 #  `data_read.py`
 
