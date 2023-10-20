@@ -2,6 +2,13 @@
 
   Detecção de todas as arestas de corte em uma rede indicando pontos criticos de falha, ou seja, pontos na rede que, se falharem, isolam parte da rede, e identificação de quais pontos ficariam isolados em consequencia da indisponibilidade de tais pontos críticos. 
 
+# Integrantes do grupo
+
+Antonio Camilo Santos Feitosa
+Carlos Hemrique
+Laura Cardoso Rodrigues
+Yuming Ruan
+
 #  `data_read.py`
 
 O módulo `data_read.py` é responsável por ler dados de um arquivo de entrada e criar uma lista de adjacência que representa um grafo. 
